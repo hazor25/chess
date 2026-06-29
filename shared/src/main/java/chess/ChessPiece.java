@@ -123,62 +123,68 @@ public class ChessPiece {
         Collection<ChessMove> moves = new ArrayList<>();
 
         switch (pieceType){
-            case PAWN:
+            case PAWN:                                          // //////////////////////////////////////////
                 int direction;
                 int startRow;
                 int promotRow;
 
                 if (teamColor == ChessGame.TeamColor.BLACK) {
                     direction = -1;
-                    startRow = 7;
-                    promotRow = 1;
+                    startRow = 7;                               // Initialize directions and stuff to make validating
+                    promotRow = 1;                              // and directions easier
                 } else {
                     direction = 1;
                     startRow = 2;
                     promotRow = 8;
-                }
-
+                }                                               // /////////////////////////////////////////////
+                                                                        // start move forward handling
                 int row = myPosition.getRow() + direction;
                 int col = myPosition.getColumn();
 
-                if (inBounds(row, col)) {                                 //move forwards handling
+                if (inBounds(row, col)) {                                   // prospective move is in bounds
                     ChessPosition testPos = new ChessPosition(row, col);
 
-                    if (board.getPiece(testPos) == null) {                  //can move forward
+                    if (board.getPiece(testPos) == null) {                      // forward is empty, can move forward
 
-                        if (testPos.getRow() == promotRow) {                    // forward is promotion
+                        if (testPos.getRow() == promotRow) {                            // forward is promotion
                             addPromotions(moves, myPosition, testPos);
 
-                        } else if (myPosition.getRow() == startRow) {           //on starting row
+                        } else {                                    //move forward is valid and not promote so add it
                             moves.add(new ChessMove(myPosition, testPos, null));
 
-                            ChessPosition secondForward = new ChessPosition(testPos.getRow()+direction, myPosition.getColumn());
-                            if (board.getPiece(secondForward) == null) {            //second forward position is empty
-                                moves.add(new ChessMove(myPosition, secondForward, null));
-                            }
-                        } else {                        //not on starting or before promotion, but move forward is valid
-                            moves.add(new ChessMove(myPosition, testPos, null));
-                        }
-                    }
-                }
+                            if (myPosition.getRow() == startRow) {               // on starting row
+                                ChessPosition secondForward = new ChessPosition(testPos.getRow()+direction, myPosition.getColumn());
 
-                int[] diagMoves = {1, -1};                  //handles diagonal pawn movement
-                for (int diag: diagMoves){
-                    col = myPosition.getColumn()+diag;
-                    if (inBounds(row, col)) {
-                        ChessPosition diagonal = new ChessPosition(row, col);
-                        ChessPiece diagPiece = board.getPiece(diagonal);
-                        if (diagPiece != null) {
-                            if (diagPiece.getTeamColor() != teamColor) {
-                                if (diagonal.getRow() == promotRow) {
-                                    addPromotions(moves, myPosition, diagonal);
-                                } else {
-                                    moves.add(new ChessMove(myPosition, diagonal, null));
+                                if (board.getPiece(secondForward) == null) {            // second forward position is empty
+                                    moves.add(new ChessMove(myPosition, secondForward, null));
                                 }
                             }
                         }
                     }
                 }
+                                                                            // end move forwards handling
+                                                                // //////////////////////////////////////////////////
+                int[] diagMoves = {1, -1};
+                for (int diag: diagMoves){
+                    col = myPosition.getColumn()+diag;
+
+                    if (inBounds(row, col)) {
+                        ChessPosition diagonal = new ChessPosition(row, col);
+                        ChessPiece diagPiece = board.getPiece(diagonal);
+
+                        if (diagPiece != null) {                                // solely handles diagonal movement validating
+                            if (diagPiece.getTeamColor() != teamColor) {
+                                if (diagonal.getRow() == promotRow) {
+                                    addPromotions(moves, myPosition, diagonal);
+
+                                } else {
+                                    moves.add(new ChessMove(myPosition, diagonal, null));
+
+                                }
+                            }
+                        }
+                    }
+                }                                               // ///////////////////////////////////////////////
                 break;
 
             case ROOK:
