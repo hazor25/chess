@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -49,7 +50,29 @@ public class ChessGame {
      * startPosition
      */
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
-        throw new RuntimeException("Not implemented");
+        if (board.getPiece(startPosition) == null) {
+            return null;
+        }
+        Collection<ChessMove> validMoves = new ArrayList<>();
+
+        ChessPiece testPiece = board.getPiece(startPosition);
+        Collection<ChessMove> pieceMoves = testPiece.pieceMoves(board, startPosition);
+        ChessBoard original = board;
+
+        for (ChessMove move: pieceMoves) {
+            ChessBoard testBoard = new ChessBoard(original);
+
+            testBoard.addPiece(move.getStartPosition(), null);
+            testBoard.addPiece(move.getEndPosition(), testPiece);
+
+            board = testBoard;
+
+            if (!isInCheck(testPiece.getTeamColor())) {
+                validMoves.add(move);
+            }
+        }
+        board = original;
+        return validMoves;
     }
 
     /**
@@ -61,6 +84,7 @@ public class ChessGame {
     public void makeMove(ChessMove move) throws InvalidMoveException {
         throw new RuntimeException("Not implemented");
     }
+
 
 
     // helper to find the king and debloat inCheck function //
@@ -78,8 +102,6 @@ public class ChessGame {
         }
         return null;
     }
-
-
 
     /**
      * Determines if the given team is in check
