@@ -108,7 +108,25 @@ public class ChessGame {
         setTeamTurn(color == TeamColor.WHITE? TeamColor.BLACK: TeamColor.WHITE);
     }
 
+    private TeamColor oppositeColor(TeamColor color) {
+        return color == TeamColor.WHITE? TeamColor.BLACK : TeamColor.WHITE;
+    }
 
+    private Collection<ChessPosition> getPieces(TeamColor team) {
+        Collection<ChessPosition> pieces = new ArrayList<>();
+
+        for (int row = 1; row <= 8; row++) {
+            for (int col = 1; col <= 8; col++) {
+                ChessPosition pos = new ChessPosition(row, col);
+                ChessPiece piece = board.getPiece(pos);
+
+                if (piece != null && piece.getTeamColor() == team) {
+                    pieces.add(pos);
+                }
+            }
+        }
+        return pieces;
+    }
 
     // helper to find the king and debloat inCheck function //
     private ChessPosition getKingPos(TeamColor teamColor) {
@@ -135,19 +153,12 @@ public class ChessGame {
     public boolean isInCheck(TeamColor teamColor) {
         ChessPosition kingsPos = getKingPos(teamColor);
 
-        for (int row = 1; row <= 8; row++) {
-            for (int col = 1; col <= 8; col++) {
-                ChessPosition testPos = new ChessPosition(row, col);
-                ChessPiece testPiece = board.getPiece(testPos);
-                if (testPiece != null) {
-                    if (testPiece.getTeamColor() != teamColor) {
-                        Collection<ChessMove> moves = testPiece.pieceMoves(board, testPos);
-                        for (ChessMove move: moves) {
-                            if (move.getEndPosition().equals(kingsPos)) {
-                                return true;
-                            }
-                        }
-                    }
+        for (ChessPosition pos: getPieces(oppositeColor(teamColor))) {
+            ChessPiece testPiece = board.getPiece(pos);
+            Collection<ChessMove> moves = testPiece.pieceMoves(board, pos);
+            for (ChessMove move: moves) {
+                if (move.getEndPosition().equals(kingsPos)) {
+                    return true;
                 }
             }
         }
@@ -164,18 +175,11 @@ public class ChessGame {
         if (!isInCheck(teamColor)) {
             return false;
         }
-        for (int row = 1; row <= 8; row++) {
-            for (int col = 1; col <= 8; col++) {
-                ChessPosition testPos = new ChessPosition(row, col);
-                ChessPiece testPiece = board.getPiece(testPos);
-                if (testPiece != null) {
-                    if (testPiece.getTeamColor() == teamColor) {
-                        Collection<ChessMove> moves = validMoves(testPos);
-                        if (!moves.isEmpty()) {
-                            return false;
-                        }
-                    }
-                }
+
+        for (ChessPosition pos: getPieces(teamColor)) {
+            Collection<ChessMove> moves = validMoves(pos);
+            if (!moves.isEmpty()) {
+                return false;
             }
         }
         return true;
@@ -192,18 +196,10 @@ public class ChessGame {
         if (isInCheck(teamColor)) {
             return false;
         }
-        for (int row = 1; row <= 8; row++) {
-            for (int col = 1; col <= 8; col++) {
-                ChessPosition testPos = new ChessPosition(row, col);
-                ChessPiece testPiece = board.getPiece(testPos);
-                if (testPiece != null) {
-                    if (testPiece.getTeamColor() == teamColor) {
-                        Collection<ChessMove> moves = validMoves(testPos);
-                        if (!moves.isEmpty()) {
-                            return false;
-                        }
-                    }
-                }
+        for (ChessPosition pos: getPieces(teamColor)) {
+            Collection<ChessMove> moves = validMoves(pos);
+            if (!moves.isEmpty()) {
+                return false;
             }
         }
         return true;
