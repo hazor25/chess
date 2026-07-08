@@ -64,6 +64,17 @@ public class ChessBoard {
         }
     }
 
+    //makes a copy of inputted board//
+    public ChessBoard(ChessBoard other) {
+        board = new ChessPiece[8][8];
+
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                board[row][col] = other.board[row][col];
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
