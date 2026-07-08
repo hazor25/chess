@@ -108,11 +108,18 @@ public class ChessGame {
         setTeamTurn(color == TeamColor.WHITE? TeamColor.BLACK: TeamColor.WHITE);
     }
 
+    /**
+     * Simple helper function to switch the team color
+     */
     private TeamColor oppositeColor(TeamColor color) {
         return color == TeamColor.WHITE? TeamColor.BLACK : TeamColor.WHITE;
     }
 
-    private Collection<ChessPosition> getPieces(TeamColor team) {
+    /**
+     * Helper function to get the positions of all active pieces of parameter color
+     * @param color pieces' color you are looking for
+     */
+    private Collection<ChessPosition> getPieces(TeamColor color) {
         Collection<ChessPosition> pieces = new ArrayList<>();
 
         for (int row = 1; row <= 8; row++) {
@@ -120,7 +127,7 @@ public class ChessGame {
                 ChessPosition pos = new ChessPosition(row, col);
                 ChessPiece piece = board.getPiece(pos);
 
-                if (piece != null && piece.getTeamColor() == team) {
+                if (piece != null && piece.getTeamColor() == color) {
                     pieces.add(pos);
                 }
             }
@@ -128,6 +135,11 @@ public class ChessGame {
         return pieces;
     }
 
+    /**
+     * Helper function for getting the position of your King piece
+     * uses getPieces()
+     * @param color color to consider and look for
+     */
     private ChessPosition getKingPos(TeamColor color) {
         Collection<ChessPosition> pieces = getPieces(color);
         for (ChessPosition piece: pieces) {
