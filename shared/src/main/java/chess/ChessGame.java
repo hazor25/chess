@@ -62,6 +62,25 @@ public class ChessGame {
         throw new RuntimeException("Not implemented");
     }
 
+
+    // helper to find the king and debloat inCheck function //
+    private ChessPosition getKingPos(TeamColor teamColor) {
+        for (int row = 1; row <= 8; row++) {
+            for (int col = 1; col <= 8; col++) {
+                ChessPosition findKing = new ChessPosition(row, col);
+                ChessPiece testPiece = board.getPiece(findKing);
+                if (testPiece != null) {
+                    if (testPiece.getTeamColor() == teamColor && testPiece.getPieceType() == ChessPiece.PieceType.KING) {
+                        return findKing;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+
+
     /**
      * Determines if the given team is in check
      *
@@ -69,7 +88,25 @@ public class ChessGame {
      * @return True if the specified team is in check
      */
     public boolean isInCheck(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        ChessPosition kingsPos = getKingPos(teamColor);
+
+        for (int row = 1; row <= 8; row++) {
+            for (int col = 1; col <= 8; col++) {
+                ChessPosition testPos = new ChessPosition(row, col);
+                ChessPiece testPiece = board.getPiece(testPos);
+                if (testPiece != null) {
+                    if (testPiece.getTeamColor() != teamColor) {
+                        Collection<ChessMove> moves = testPiece.pieceMoves(board, testPos);
+                        for (ChessMove move: moves) {
+                            if (move.getEndPosition().equals(kingsPos)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**
