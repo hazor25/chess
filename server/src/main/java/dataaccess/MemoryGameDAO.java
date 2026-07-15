@@ -7,6 +7,12 @@ import java.util.HashMap;
 
 public class MemoryGameDAO implements GameDAO {
     private final HashMap<Integer, GameData> games = new HashMap<>();
+    private int nextGameID = 1;
+
+    @Override
+    public int generateGameID() {
+        return nextGameID++;
+    }
 
     @Override
     public void createGame(GameData game) throws DataAccessException {
@@ -39,6 +45,7 @@ public class MemoryGameDAO implements GameDAO {
 
     @Override
     public void clear() {
+        nextGameID = 1;
         games.clear();
     }
 }

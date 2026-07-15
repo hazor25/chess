@@ -37,7 +37,7 @@ public class GameService {
             throw new DataAccessException("Bad request");
         }
 
-        int gameID = Math.abs(new java.util.Random().nextInt());
+        int gameID = gameDAO.generateGameID();
         GameData newGame = new GameData(gameID, null, null, request.gameName(), new ChessGame());
         gameDAO.createGame(newGame);
         return new CreateGameResult(gameID);
@@ -48,16 +48,12 @@ public class GameService {
         return new ListGamesResult(gameDAO.listGames());
     }
 
-    private Boolean colorAvailable(JoinGameRequest req, String color, GameData game) {
-        if ("WHITE".equals(req.playerColor())) {
-            if (game.whiteUsername() != null) {
-                return false;
-            }
+    private Boolean colorAvailable(String color, GameData game) {
+        if ("WHITE".equals(color)) {
+            return game.whiteUsername() == null;
         }
-        else if ("BLACK".equals(req.playerColor())) {
-            if (game.blackUsername() != null) {
-                return false;
-            }
+        else if ("BLACK".equals(color)) {
+            return game.blackUsername() == null;
         }
         return true;
     }
@@ -65,18 +61,23 @@ public class GameService {
     public JoinGameResult joinGame(JoinGameRequest request, String token) throws DataAccessException{
         AuthData auth = validateAuth(token);
         String username = auth.username();
+        String color = request.playerColor();
 
-        if (request == null || request.playerColor() == null) {
+        if (request == null || color == null) {
             throw new DataAccessException("Bad request");
+        }
+        if (!"WHITE".equals(color) && !"BLACK".equals(color)) {
+            throw new DataAccessException("Invalid color");
         }
         GameData game = gameDAO.getGame(request.gameID());
 
-        if (colorAvailable(request,  request.playerColor(), game)) {
+        if (colorAvailable(color, game)) {
             GameData updatedGame =  new GameData(game.gameID(), username,
                     game.blackUsername(), game.gameName(), game.game());
-            gameDAO.updateGame(game);
-        } else {
-            throw new DataAccessException(request.playerColor() + "player already taken");
+            gameDAO.updateGame(updatedGame);
+        }
+        else {
+            throw new DataAccessException(color + "player already taken");
         }
 
 
