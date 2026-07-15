@@ -31,7 +31,7 @@ public class GameService {
     }
 
 
-    public CreateGameResult createGame(CreateGameRequest request, String token) throws DataAccessException {
+    public CreateGameResult createGame(String token, CreateGameRequest request) throws DataAccessException {
         validateAuth(token);
         if (request == null || request.gameName() == null || request.gameName().isBlank()) {
             throw new DataAccessException("Bad request");
@@ -48,40 +48,43 @@ public class GameService {
         return new ListGamesResult(gameDAO.listGames());
     }
 
-    private Boolean colorAvailable(String color, GameData game) {
+    private boolean colorAvailable(String color, GameData game) {
         if ("WHITE".equals(color)) {
             return game.whiteUsername() == null;
-        }
-        else if ("BLACK".equals(color)) {
+        } else if ("BLACK".equals(color)) {
             return game.blackUsername() == null;
         }
-        return true;
+        return false;
     }
 
-    public JoinGameResult joinGame(JoinGameRequest request, String token) throws DataAccessException{
+    public JoinGameResult joinGame(String token,JoinGameRequest request) throws DataAccessException{
         AuthData auth = validateAuth(token);
         String username = auth.username();
-        String color = request.playerColor();
 
-        if (request == null || color == null) {
+        if (request == null || request.playerColor() == null) {
             throw new DataAccessException("Bad request");
         }
+        String color = request.playerColor();
+
         if (!"WHITE".equals(color) && !"BLACK".equals(color)) {
-            throw new DataAccessException("Invalid color");
+            throw new DataAccessException("Bad request");
         }
         GameData game = gameDAO.getGame(request.gameID());
 
         if (colorAvailable(color, game)) {
-            GameData updatedGame =  new GameData(game.gameID(), username,
-                    game.blackUsername(), game.gameName(), game.game());
-            gameDAO.updateGame(updatedGame);
+            if ("WHITE".equals(color)) {
+                GameData updatedGame =  new GameData(game.gameID(), username,
+                        game.blackUsername(), game.gameName(), game.game());
+                gameDAO.updateGame(updatedGame);
+            } else {
+                GameData updatedGame =  new GameData(game.gameID(), game.whiteUsername(),
+                        username, game.gameName(), game.game());
+                gameDAO.updateGame(updatedGame);
+            }
         }
         else {
             throw new DataAccessException(color + "player already taken");
         }
-
-
-
         return new JoinGameResult();
     }
 }
