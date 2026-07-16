@@ -83,7 +83,7 @@ public class GameService {
             }
         }
         else {
-            throw new DataAccessException(color + "already taken");
+            throw new DataAccessException("already taken");
         }
         return new JoinGameResult();
     }
