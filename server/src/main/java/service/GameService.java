@@ -25,7 +25,7 @@ public class GameService {
     private AuthData validateAuth(String authToken) throws DataAccessException {
         AuthData auth = authDAO.getAuth(authToken);
         if (auth == null) {
-            throw new DataAccessException("Unauthorized");
+            throw new DataAccessException("unauthorized");
         }
         return auth;
     }
@@ -34,7 +34,7 @@ public class GameService {
     public CreateGameResult createGame(String token, CreateGameRequest request) throws DataAccessException {
         validateAuth(token);
         if (request == null || request.gameName() == null || request.gameName().isBlank()) {
-            throw new DataAccessException("Bad request");
+            throw new DataAccessException("bad request");
         }
 
         int gameID = gameDAO.generateGameID();
@@ -62,12 +62,12 @@ public class GameService {
         String username = auth.username();
 
         if (request == null || request.playerColor() == null) {
-            throw new DataAccessException("Bad request");
+            throw new DataAccessException("bad request");
         }
         String color = request.playerColor();
 
         if (!"WHITE".equals(color) && !"BLACK".equals(color)) {
-            throw new DataAccessException("Bad request");
+            throw new DataAccessException("bad request");
         }
         GameData game = gameDAO.getGame(request.gameID());
 
@@ -83,7 +83,7 @@ public class GameService {
             }
         }
         else {
-            throw new DataAccessException(color + "player already taken");
+            throw new DataAccessException(color + "already taken");
         }
         return new JoinGameResult();
     }
