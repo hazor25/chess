@@ -23,7 +23,26 @@ public class UserService {
         this.authDAO = authDAO;
     }
 
+    private void validateRegisterRequest(RegisterRequest request) throws DataAccessException {
+        if (request == null ||
+                request.username() == null || request.username().isBlank() ||
+                request.password() == null || request.password().isBlank() ||
+                request.email() == null || request.email().isBlank()) {
+            throw new DataAccessException("bad request");
+        }
+    }
+
+    private void validateLoginRequest(LoginRequest request) throws DataAccessException {
+        if (request == null ||
+                request.username() == null || request.username().isBlank() ||
+                request.password() == null || request.password().isBlank()) {
+            throw new DataAccessException("bad request");
+        }
+    }
+
     public RegisterResult register(RegisterRequest request) throws DataAccessException {
+        validateRegisterRequest(request);
+
         UserData existingUser = userDAO.getUser(request.username());
         if (existingUser != null) {
             throw new DataAccessException("already taken");
@@ -37,6 +56,7 @@ public class UserService {
     }
 
     public LoginResult login(LoginRequest request) throws DataAccessException {
+        validateLoginRequest(request);
         UserData inputUser = userDAO.getUser(request.username());
 
         if (inputUser == null) {
