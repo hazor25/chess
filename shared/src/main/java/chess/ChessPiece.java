@@ -58,8 +58,8 @@ public class ChessPiece {
     /**
      * Shared move adding for King and Knight
      */
-    private void addJumpMoves(int[][] PMoves, Collection<ChessMove> moves, ChessBoard board, ChessPosition myPosition) {
-        for (int[] move: PMoves) {
+    private void addJumpMoves(int[][] pieceMoves, Collection<ChessMove> moves, ChessBoard board, ChessPosition myPosition) {
+        for (int[] move: pieceMoves) {
             int row = myPosition.getRow()+move[0];
             int col = myPosition.getColumn()+move[1];
 
@@ -112,6 +112,70 @@ public class ChessPiece {
     }
 
 
+    private void pawnMoves(Collection<ChessMove> moves, ChessBoard board, ChessPosition myPosition) {
+        int direction;
+        int startRow;
+        int promotRow;
+
+        if (teamColor == ChessGame.TeamColor.BLACK) {
+            direction = -1;
+            startRow = 7;                               // Initialize directions and stuff to make validating
+            promotRow = 1;                              // and directions easier
+        } else {
+            direction = 1;
+            startRow = 2;
+            promotRow = 8;
+        }                                               // /////////////////////////////////////////////
+        // start move forward handling
+        int row = myPosition.getRow() + direction;
+        int col = myPosition.getColumn();
+
+        if (inBounds(row, col)) {                                   // prospective move is in bounds
+            ChessPosition testPos = new ChessPosition(row, col);
+
+            if (board.getPiece(testPos) == null) {                      // forward is empty, can move forward
+
+                if (testPos.getRow() == promotRow) {                            // forward is promotion
+                    addPromotions(moves, myPosition, testPos);
+
+                } else {                                    //move forward is valid and not promote so add it
+                    moves.add(new ChessMove(myPosition, testPos, null));
+
+                    if (myPosition.getRow() == startRow) {               // on starting row
+                        ChessPosition secondForward = new ChessPosition(testPos.getRow()+direction, myPosition.getColumn());
+
+                        if (board.getPiece(secondForward) == null) {            // second forward position is empty
+                            moves.add(new ChessMove(myPosition, secondForward, null));
+                        }
+                    }
+                }
+            }
+        }
+        // end move forwards handling
+        // //////////////////////////////////////////////////
+        int[] diagMoves = {1, -1};
+        for (int diag: diagMoves){
+            col = myPosition.getColumn()+diag;
+
+            if (inBounds(row, col)) {
+                ChessPosition diagonal = new ChessPosition(row, col);
+                ChessPiece diagPiece = board.getPiece(diagonal);
+
+                if (diagPiece != null) {                                // solely handles diagonal movement validating
+                    if (diagPiece.getTeamColor() != teamColor) {
+                        if (diagonal.getRow() == promotRow) {
+                            addPromotions(moves, myPosition, diagonal);
+
+                        } else {
+                            moves.add(new ChessMove(myPosition, diagonal, null));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     /**
      * Calculates all the positions a chess piece can move to
      * Does not take into account moves that are illegal due to leaving the king in
@@ -123,68 +187,8 @@ public class ChessPiece {
         Collection<ChessMove> moves = new ArrayList<>();
 
         switch (pieceType){
-            case PAWN:                                          // //////////////////////////////////////////
-                int direction;
-                int startRow;
-                int promotRow;
-
-                if (teamColor == ChessGame.TeamColor.BLACK) {
-                    direction = -1;
-                    startRow = 7;                               // Initialize directions and stuff to make validating
-                    promotRow = 1;                              // and directions easier
-                } else {
-                    direction = 1;
-                    startRow = 2;
-                    promotRow = 8;
-                }                                               // /////////////////////////////////////////////
-                                                                        // start move forward handling
-                int row = myPosition.getRow() + direction;
-                int col = myPosition.getColumn();
-
-                if (inBounds(row, col)) {                                   // prospective move is in bounds
-                    ChessPosition testPos = new ChessPosition(row, col);
-
-                    if (board.getPiece(testPos) == null) {                      // forward is empty, can move forward
-
-                        if (testPos.getRow() == promotRow) {                            // forward is promotion
-                            addPromotions(moves, myPosition, testPos);
-
-                        } else {                                    //move forward is valid and not promote so add it
-                            moves.add(new ChessMove(myPosition, testPos, null));
-
-                            if (myPosition.getRow() == startRow) {               // on starting row
-                                ChessPosition secondForward = new ChessPosition(testPos.getRow()+direction, myPosition.getColumn());
-
-                                if (board.getPiece(secondForward) == null) {            // second forward position is empty
-                                    moves.add(new ChessMove(myPosition, secondForward, null));
-                                }
-                            }
-                        }
-                    }
-                }
-                                                                            // end move forwards handling
-                                                                // //////////////////////////////////////////////////
-                int[] diagMoves = {1, -1};
-                for (int diag: diagMoves){
-                    col = myPosition.getColumn()+diag;
-
-                    if (inBounds(row, col)) {
-                        ChessPosition diagonal = new ChessPosition(row, col);
-                        ChessPiece diagPiece = board.getPiece(diagonal);
-
-                        if (diagPiece != null) {                                // solely handles diagonal movement validating
-                            if (diagPiece.getTeamColor() != teamColor) {
-                                if (diagonal.getRow() == promotRow) {
-                                    addPromotions(moves, myPosition, diagonal);
-
-                                } else {
-                                    moves.add(new ChessMove(myPosition, diagonal, null));
-
-                                }
-                            }
-                        }
-                    }
-                }                                               // ///////////////////////////////////////////////
+            case PAWN:
+                pawnMoves(moves, board, myPosition);
                 break;
 
             case ROOK:
