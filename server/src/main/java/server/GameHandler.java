@@ -61,30 +61,32 @@ public class GameHandler {
     }
 
     private void handleException(Context ctx, Exception ex) {
+        ctx.contentType("application/json");
+
         if (ex instanceof DataAccessException dae) {
             String message = dae.getMessage();
 
             switch (message) {
                 case "bad request" -> {
                     ctx.status(400);
-                    ctx.json(Map.of("message", "Error: " + message));
+                    ctx.result(gson.toJson(Map.of("message", "Error: " + message)));
                 }
                 case "unauthorized" -> {
                     ctx.status(401);
-                    ctx.json(Map.of("message", "Error: " + message));
+                    ctx.result(gson.toJson(Map.of("message", "Error: " + message)));
                 }
                 case "already taken" -> {
                     ctx.status(403);
-                    ctx.json(Map.of("message", "Error: " + message));
+                    ctx.result(gson.toJson(Map.of("message", "Error: " + message)));
                 }
                 default -> {
                     ctx.status(500);
-                    ctx.json(Map.of("message", "Error: " + message));
+                    ctx.result(gson.toJson(Map.of("message", "Error: " + message)));
                 }
             }
         } else {
             ctx.status(500);
-            ctx.json(Map.of("message", "Error: " + ex.getMessage()));
+            ctx.result(gson.toJson(Map.of("message", "Error: " + ex.getMessage())));
         }
     }
 }

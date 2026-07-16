@@ -26,7 +26,7 @@ public class UserService {
     public RegisterResult register(RegisterRequest request) throws DataAccessException {
         UserData existingUser = userDAO.getUser(request.username());
         if (existingUser != null) {
-            throw new DataAccessException("already exists");
+            throw new DataAccessException("already taken");
         }
         UserData newUser = new UserData(request.username(), request.password(), request.email());
         userDAO.createUser(newUser);
@@ -40,11 +40,11 @@ public class UserService {
         UserData inputUser = userDAO.getUser(request.username());
 
         if (inputUser == null) {
-            throw new DataAccessException("incorrect username or password");
+            throw new DataAccessException("unauthorized");
         }
 
         if (!inputUser.password().equals(request.password())) {
-            throw new DataAccessException("incorrect username or password");
+            throw new DataAccessException("unauthorized");
         }
 
         String token = UUID.randomUUID().toString();
