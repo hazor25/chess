@@ -27,7 +27,8 @@ public class GameHandler {
             String authToken = ctx.header("authorization");
             ListGamesResult result = gameService.listGames(authToken);
             ctx.status(200);
-            ctx.json(result);
+            ctx.contentType("application/json");
+            ctx.result(gson.toJson(result));
         } catch (Exception ex) {
             handleException(ctx, ex);
         }
@@ -39,7 +40,8 @@ public class GameHandler {
             CreateGameRequest request = gson.fromJson(ctx.body(), CreateGameRequest.class);
             CreateGameResult result = gameService.createGame(authToken, request);
             ctx.status(200);
-            ctx.json(result);
+            ctx.contentType("application/json");
+            ctx.result(gson.toJson(result));
         } catch (Exception ex) {
             handleException(ctx, ex);
         }
@@ -51,7 +53,8 @@ public class GameHandler {
             JoinGameRequest request = gson.fromJson(ctx.body(), JoinGameRequest.class);
             JoinGameResult result = gameService.joinGame(authToken, request);
             ctx.status(200);
-            ctx.json(result);
+            ctx.contentType("application/json");
+            ctx.result(gson.toJson(result));
         } catch (Exception ex) {
             handleException(ctx, ex);
         }
@@ -70,9 +73,9 @@ public class GameHandler {
                     ctx.status(401);
                     ctx.json(Map.of("message", "Error: " + message));
                 }
-                case "already exists" -> {
+                case "already taken" -> {
                     ctx.status(403);
-                    ctx.json(Map.of("message", "Error: already taken"));
+                    ctx.json(Map.of("message", "Error: " + message));
                 }
                 default -> {
                     ctx.status(500);

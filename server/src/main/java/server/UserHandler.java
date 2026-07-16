@@ -27,7 +27,8 @@ public class UserHandler {
             RegisterRequest request = gson.fromJson(ctx.body(), RegisterRequest.class);
             RegisterResult result = userService.register(request);
             ctx.status(200);
-            ctx.json(result);
+            ctx.contentType("application/json");
+            ctx.result(gson.toJson(result));
         } catch (Exception ex) {
             handleException(ctx, ex);
         }
@@ -38,7 +39,8 @@ public class UserHandler {
             LoginRequest request = gson.fromJson(ctx.body(), LoginRequest.class);
             LoginResult result = userService.login(request);
             ctx.status(200);
-            ctx.json(result);
+            ctx.contentType("application/json");
+            ctx.result(gson.toJson(result));
         } catch (Exception ex) {
             handleException(ctx, ex);
         }
@@ -49,7 +51,8 @@ public class UserHandler {
             String authToken = ctx.header("authorization");
             LogoutResult result = userService.logout(authToken);
             ctx.status(200);
-            ctx.json(result);
+            ctx.contentType("application/json");
+            ctx.result(gson.toJson(result));
         } catch (Exception ex) {
             handleException(ctx, ex);
         }
@@ -68,9 +71,9 @@ public class UserHandler {
                     ctx.status(401);
                     ctx.json(Map.of("message", "Error: " + message));
                 }
-                case "already exists" -> {
+                case "already taken" -> {
                     ctx.status(403);
-                    ctx.json(Map.of("message", "Error: already taken" ));
+                    ctx.json(Map.of("message", "Error: " + message));
                 }
                 default -> {
                     ctx.status(500);
