@@ -4,11 +4,10 @@ import com.google.gson.Gson;
 import dataaccess.DataAccessException;
 import io.javalin.http.Context;
 
-import request.CreateGameRequest;
 import request.LoginRequest;
 import request.RegisterRequest;
-import result.CreateGameResult;
 import result.LoginResult;
+import result.LogoutResult;
 import result.RegisterResult;
 import service.UserService;
 
@@ -23,9 +22,8 @@ public class UserHandler {
         this.userService = userService;
     }
 
-    public void register(Context ctx) throws DataAccessException {
+    public void register(Context ctx) {
         try {
-            String authToken = ctx.header("authorization");
             RegisterRequest request = gson.fromJson(ctx.body(), RegisterRequest.class);
             RegisterResult result = userService.register(request);
             ctx.status(200);
@@ -35,9 +33,8 @@ public class UserHandler {
         }
     }
 
-    public void login(Context ctx) throws DataAccessException {
+    public void login(Context ctx) {
         try {
-            String authToken = ctx.header("authorization");
             LoginRequest request = gson.fromJson(ctx.body(), LoginRequest.class);
             LoginResult result = userService.login(request);
             ctx.status(200);
@@ -47,10 +44,10 @@ public class UserHandler {
         }
     }
 
-    public void logout(Context ctx) throws DataAccessException {
+    public void logout(Context ctx) {
         try {
             String authToken = ctx.header("authorization");
-
+            LogoutResult result = userService.logout(authToken);
             ctx.status(200);
             ctx.json(result);
         } catch (Exception ex) {
@@ -73,7 +70,7 @@ public class UserHandler {
                 }
                 case "already exists" -> {
                     ctx.status(403);
-                    ctx.json(Map.of("message", "Error: " + message));
+                    ctx.json(Map.of("message", "Error: already taken" ));
                 }
                 default -> {
                     ctx.status(500);

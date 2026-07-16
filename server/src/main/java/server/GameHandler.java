@@ -72,7 +72,7 @@ public class GameHandler {
                 }
                 case "already exists" -> {
                     ctx.status(403);
-                    ctx.json(Map.of("message", "Error: " + message));
+                    ctx.json(Map.of("message", "Error: already taken"));
                 }
                 default -> {
                     ctx.status(500);
