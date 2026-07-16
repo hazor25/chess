@@ -14,6 +14,7 @@ import service.GameService;
 import java.util.Map;
 
 public class GameHandler {
+
     private final GameService gameService;
     private final Gson gson = new Gson();
 
