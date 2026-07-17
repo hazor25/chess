@@ -7,7 +7,6 @@ import model.GameData;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class SQLGameDAO implements GameDAO {
     private final Gson gson = new Gson();
@@ -164,6 +163,11 @@ public class SQLGameDAO implements GameDAO {
         WHERE gameID = ?;
         """;
 
-
+        try (var conn = DatabaseManager.getConnection();
+             var statement = conn.prepareStatement(sql)) {
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new DataAccessException("Unable to clear users", e);
+        }
     }
 }
