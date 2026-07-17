@@ -9,17 +9,17 @@ public class MemoryGameDAO implements GameDAO {
     private final HashMap<Integer, GameData> games = new HashMap<>();
     private int nextGameID = 1;
 
-    @Override
-    public int generateGameID() {
+    private int generateGameID() {
         return nextGameID++;
     }
 
     @Override
-    public void createGame(GameData game) throws DataAccessException {
+    public int createGame(GameData game) throws DataAccessException {
         if (games.containsKey(game.gameID())) {
             throw new DataAccessException("already exists");
         }
         games.put(game.gameID(), game);
+        return game.gameID();
     }
 
     @Override
