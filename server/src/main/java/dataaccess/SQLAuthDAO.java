@@ -31,7 +31,7 @@ public class SQLAuthDAO implements AuthDAO {
     @Override
     public void createAuth(AuthData authData) throws DataAccessException {
         String sql = """
-        INSERT INTO users (authToken, username)
+        INSERT INTO auths (authToken, username)
         VALUES (?, ?)
         """;
 
@@ -42,22 +42,62 @@ public class SQLAuthDAO implements AuthDAO {
 
             statement.executeUpdate();
         }  catch (Exception e) {
-            throw new DataAccessException("Unable to create user", e);
+            throw new DataAccessException("Unable to create auth", e);
         }
     }
 
     @Override
     public AuthData getAuth(String authToken) throws DataAccessException {
-        return null;
+        String sql = """
+        SELECT authToken, username
+        FROM auths
+        WHERE authToken = ?
+        """;
+
+        try (var conn = DatabaseManager.getConnection();
+             var statement = conn.prepareStatement(sql)) {
+            statement.setString(1, authToken);
+
+            var resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return new AuthData(
+                        resultSet.getString("authToken"),
+                        resultSet.getString("username")
+                );
+            }
+            return null;
+
+        } catch (Exception e) {
+            throw new DataAccessException("Unable to get auth", e);
+        }
     }
 
     @Override
     public void deleteAuth(String authToken) throws DataAccessException {
+        String sql = """
+        DELETE FROM auths
+        WHERE authToken = ?
+        """;
 
+        try (var conn = DatabaseManager.getConnection();
+             var statement = conn.prepareStatement(sql)) {
+
+            statement.setString(1, authToken);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new DataAccessException("Unable to delete auth", e);
+        }
     }
 
     @Override
     public void clear() throws DataAccessException {
+        String sql = "DELETE FROM auths";
 
+        try (var conn = DatabaseManager.getConnection();
+             var statement = conn.prepareStatement(sql)) {
+            statement.executeUpdate();
+        } catch (Exception e) {
+            throw new DataAccessException("Unable to clear auths", e);
+        }
     }
 }
