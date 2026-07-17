@@ -28,8 +28,8 @@ public class ClearServiceTest {
     void clearPositive() throws Exception {
         userDAO.createUser(new UserData("cass", "password", "cass21@email.com"));
         authDAO.createAuth(new AuthData("token", "cass"));
-        int gameID = gameDAO.generateGameID();
-        gameDAO.createGame(new GameData(gameID, null, null, "Test Game", new ChessGame()));
+        GameData game = new GameData(0, null, null, "Test Game", new ChessGame());
+        gameDAO.createGame(game);
 
         clearService.clear();
 

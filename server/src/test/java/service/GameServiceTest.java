@@ -48,8 +48,7 @@ public class GameServiceTest {
 
     @Test
     void listGamesPositive() throws Exception {
-        int gameID = gameDAO.generateGameID();
-        gameDAO.createGame(new GameData(gameID, null, null, "Test Game", new ChessGame()));
+        gameDAO.createGame(new GameData(0, null, null, "Test Game", new ChessGame()));
 
         ListGamesResult result = gameService.listGames("validToken");
 
@@ -68,8 +67,7 @@ public class GameServiceTest {
 
     @Test
     void joinGamePositive() throws Exception {
-        int gameID = gameDAO.generateGameID();
-        gameDAO.createGame(new GameData(gameID, null, null, "Test Game", new ChessGame()));
+        int gameID = gameDAO.createGame(new GameData(0, null, null, "Test Game", new ChessGame()));
 
         JoinGameResult result = gameService.joinGame("validToken", new JoinGameRequest("WHITE", gameID));
 
@@ -80,8 +78,7 @@ public class GameServiceTest {
 
     @Test
     void joinGameNegative() throws Exception {
-        int gameID = gameDAO.generateGameID();
-        gameDAO.createGame(new GameData(gameID, "bob", null, "Test Game", new ChessGame()));
+        int gameID = gameDAO.createGame(new GameData(0, "bob", null, "Test Game", new ChessGame()));
 
         DataAccessException ex = assertThrows(DataAccessException.class, () ->
                 gameService.joinGame("validToken", new JoinGameRequest("WHITE", gameID))
