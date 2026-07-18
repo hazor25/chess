@@ -17,9 +17,17 @@ public class ClearHandler {
     }
 
     public void clear(Context ctx) throws DataAccessException {
-        clearService.clear();
-        ctx.status(200);
-        ctx.contentType("application/json");
-        ctx.result(gson.toJson(new ClearResult()));
+        try {
+            clearService.clear();
+
+            ctx.status(200);
+            ctx.contentType("application/json");
+            ctx.result(gson.toJson(new ClearResult()));
+
+        } catch (DataAccessException e) {
+            ctx.status(500);
+            ctx.contentType("application/json");
+            ctx.result(gson.toJson(new ClearResult("Error: " + e.getMessage())));
+        }
     }
 }
