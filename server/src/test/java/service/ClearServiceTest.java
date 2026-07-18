@@ -17,10 +17,10 @@ public class ClearServiceTest {
     private ClearService clearService;
 
     @BeforeEach
-    void setUp() {
-        userDAO = new MemoryUserDAO();
-        authDAO = new MemoryAuthDAO();
-        gameDAO = new MemoryGameDAO();
+    void setUp() throws DataAccessException {
+        userDAO = new SQLUserDAO();
+        authDAO = new SQLAuthDAO();
+        gameDAO = new SQLGameDAO();
         clearService = new ClearService(userDAO, authDAO, gameDAO);
     }
 

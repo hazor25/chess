@@ -19,9 +19,9 @@ public class UserServiceTest {
     private UserService userService;
 
     @BeforeEach
-    void setUp() {
-        userDAO = new MemoryUserDAO();
-        authDAO = new MemoryAuthDAO();
+    void setUp() throws DataAccessException {
+        userDAO = new SQLUserDAO();
+        authDAO = new SQLAuthDAO();
         userService = new UserService(userDAO, authDAO);
     }
 

@@ -20,8 +20,8 @@ public class GameServiceTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        gameDAO = new MemoryGameDAO();
-        AuthDAO authDAO = new MemoryAuthDAO();
+        gameDAO = new SQLGameDAO();
+        AuthDAO authDAO = new SQLAuthDAO();
         gameService = new GameService(gameDAO, authDAO);
 
         authDAO.createAuth(new AuthData("validToken", "hazor25"));
