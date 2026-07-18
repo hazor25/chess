@@ -160,14 +160,13 @@ public class SQLGameDAO implements GameDAO {
     public void clear() throws DataAccessException {
         String sql = """
         DELETE FROM games
-        WHERE gameID = ?;
         """;
 
         try (var conn = DatabaseManager.getConnection();
              var statement = conn.prepareStatement(sql)) {
             statement.executeUpdate();
         } catch (Exception e) {
-            throw new DataAccessException("Unable to clear users", e);
+            throw new DataAccessException("Unable to clear games", e);
         }
     }
 }
