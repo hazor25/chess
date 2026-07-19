@@ -56,19 +56,24 @@ public class GameService {
         return false;
     }
 
-    public JoinGameResult joinGame(String token,JoinGameRequest request) throws DataAccessException{
+    public JoinGameResult joinGame(String token, JoinGameRequest request) throws DataAccessException{
         AuthData auth = validateAuth(token);
         String username = auth.username();
 
         if (request == null || request.playerColor() == null) {
             throw new DataAccessException("bad request");
         }
+
+        GameData game = gameDAO.getGame(request.gameID());
+        if (game == null) {
+            throw new DataAccessException("bad request");
+        }
+
         String color = request.playerColor();
 
         if (!"WHITE".equals(color) && !"BLACK".equals(color)) {
             throw new DataAccessException("bad request");
         }
-        GameData game = gameDAO.getGame(request.gameID());
 
         if (colorAvailable(color, game)) {
             if ("WHITE".equals(color)) {
