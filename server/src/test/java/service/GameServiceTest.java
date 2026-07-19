@@ -24,6 +24,8 @@ public class GameServiceTest {
         AuthDAO authDAO = new SQLAuthDAO();
         gameService = new GameService(gameDAO, authDAO);
 
+        authDAO.clear();
+
         authDAO.createAuth(new AuthData("validToken", "hazor25"));
     }
 
