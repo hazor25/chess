@@ -6,6 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="73a568e4-c572-46ec-b9b1-6006fb8c16b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/passoff/server/StandardAPITests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/passoff/server/StandardAPITests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/test/java/passoff/chess/game/ChessGameTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/test/java/passoff/chess/game/ChessGameTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/test/java/passoff/chess/game/FullGameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/test/java/passoff/chess/game/FullGameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/test/java/passoff/chess/game/GameStatusTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/test/java/passoff/chess/game/GameStatusTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/test/java/passoff/chess/game/MakeMoveTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/test/java/passoff/chess/game/MakeMoveTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/test/java/passoff/chess/game/ValidMovesTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/test/java/passoff/chess/game/ValidMovesTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,10 +40,17 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.ChessGameTests.executor": "Run",
     "JUnit.DatabaseTests.executor": "Run",
+    "JUnit.FullGameTest (1).executor": "Run",
+    "JUnit.FullGameTest.executor": "Run",
     "JUnit.GameServiceTest.executor": "Run",
+    "JUnit.GameStatusTests (1).executor": "Run",
+    "JUnit.GameStatusTests.executor": "Run",
+    "JUnit.StandardAPITests.executor": "Run",
     "JUnit.chess in shared.executor": "Run",
     "JUnit.dataaccess in server.executor": "Run",
+    "JUnit.game in shared.executor": "Run",
     "JUnit.java in server.executor": "Run",
     "JUnit.java in shared.executor": "Run",
     "JUnit.service in server.executor": "Run",
@@ -56,62 +70,89 @@
     "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.java in server">
-    <configuration name="GameServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.StandardAPITests">
+    <configuration name="DatabaseTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="service.*" />
+          <option name="PATTERN" value="passoff.server.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="service" />
-      <option name="MAIN_CLASS_NAME" value="service.GameServiceTest" />
+      <option name="PACKAGE_NAME" value="passoff.server" />
+      <option name="MAIN_CLASS_NAME" value="passoff.server.DatabaseTests" />
       <option name="TEST_OBJECT" value="class" />
-      <dir value="$PROJECT_DIR$/server/src/test/java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="chess in shared" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="FullGameTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="shared" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/shared/src/test/java/passoff/chess" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoff.chess.game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoff.chess.game" />
+      <option name="MAIN_CLASS_NAME" value="passoff.chess.game.FullGameTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="java in server" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/server/src/test/java" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="java in shared" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GameStatusTests (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="shared" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/shared/src/test/java" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoff.chess.game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoff.chess.game" />
+      <option name="MAIN_CLASS_NAME" value="passoff.chess.game.GameStatusTests" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="service in server" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GameStatusTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shared" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoff.chess.phase.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoff.chess.phase" />
+      <option name="MAIN_CLASS_NAME" value="passoff.chess.phase.GameStatusTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StandardAPITests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/server/src/test/java/service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoff.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoff.server" />
+      <option name="MAIN_CLASS_NAME" value="passoff.server.StandardAPITests" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.java in server" />
-        <item itemvalue="JUnit.java in shared" />
-        <item itemvalue="JUnit.chess in shared" />
-        <item itemvalue="JUnit.service in server" />
-        <item itemvalue="JUnit.GameServiceTest" />
+        <item itemvalue="JUnit.StandardAPITests" />
+        <item itemvalue="JUnit.DatabaseTests" />
+        <item itemvalue="JUnit.FullGameTest (1)" />
+        <item itemvalue="JUnit.GameStatusTests (1)" />
+        <item itemvalue="JUnit.GameStatusTests" />
       </list>
     </recent_temporary>
   </component>
