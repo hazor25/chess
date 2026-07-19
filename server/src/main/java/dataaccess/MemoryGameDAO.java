@@ -40,7 +40,6 @@ public class MemoryGameDAO implements GameDAO {
 
     @Override
     public void clear() {
-        nextGameID = 1;
         games.clear();
     }
 }
