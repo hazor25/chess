@@ -7,11 +7,6 @@ import java.util.HashMap;
 
 public class MemoryGameDAO implements GameDAO {
     private final HashMap<Integer, GameData> games = new HashMap<>();
-    private int nextGameID = 1;
-
-    private int generateGameID() {
-        return nextGameID++;
-    }
 
     @Override
     public int createGame(GameData game) throws DataAccessException {
