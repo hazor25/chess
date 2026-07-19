@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73a568e4-c572-46ec-b9b1-6006fb8c16b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/server/src/test/java/dataaccess/SQLGameDAOTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/test/java/dataaccess/SQLUserDAOTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/dataaccess/DAOTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/dataaccess/SQLAuthDAOTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
