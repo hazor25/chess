@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="73a568e4-c572-46ec-b9b1-6006fb8c16b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/service/GameServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/service/GameServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/service/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,8 +35,10 @@
   "keyToString": {
     "JUnit.DatabaseTests.executor": "Run",
     "JUnit.GameServiceTest.executor": "Run",
+    "JUnit.chess in shared.executor": "Run",
     "JUnit.dataaccess in server.executor": "Run",
     "JUnit.java in server.executor": "Run",
+    "JUnit.java in shared.executor": "Run",
     "JUnit.service in server.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -56,22 +56,7 @@
     "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.service in server">
-    <configuration name="DatabaseTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="passoff.server.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="passoff.server" />
-      <option name="MAIN_CLASS_NAME" value="passoff.server.DatabaseTests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.java in server">
     <configuration name="GameServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -88,10 +73,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="dataaccess in server" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
+    <configuration name="chess in shared" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shared" />
       <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/server/src/test/java/dataaccess" />
+      <dir value="$PROJECT_DIR$/shared/src/test/java/passoff/chess" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -100,6 +85,14 @@
       <module name="server" />
       <option name="TEST_OBJECT" value="directory" />
       <dir value="$PROJECT_DIR$/server/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in shared" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shared" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/shared/src/test/java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -114,11 +107,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.java in server" />
+        <item itemvalue="JUnit.java in shared" />
+        <item itemvalue="JUnit.chess in shared" />
         <item itemvalue="JUnit.service in server" />
         <item itemvalue="JUnit.GameServiceTest" />
-        <item itemvalue="JUnit.java in server" />
-        <item itemvalue="JUnit.dataaccess in server" />
-        <item itemvalue="JUnit.DatabaseTests" />
       </list>
     </recent_temporary>
   </component>
